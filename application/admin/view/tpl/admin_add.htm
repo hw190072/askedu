@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html><head>
+	    <meta charset="utf-8">
+    <title>添加管理员</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/css/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/css/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/css/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/css/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/css/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/css/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/css/animate.css" rel="stylesheet">
+    
+</head>
+<body>
+	<!-- 头部 -->
+    {include file="tpl/top"}
+	<!-- /头部 -->
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			<!-- Page Sidebar -->
+           {include file="tpl/left"}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                                        <li>
+                        <a href="{:url('/admin')}">系统</a>
+                    </li>
+                                        <li>
+                        <a href="{:url('admin/lst')}">用户管理</a>
+                    </li>
+                                        <li class="active">添加用户</li>
+                                        </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-blue">
+                <span class="widget-caption">新增用户</span>
+            </div>
+            <div class="widget-body">
+                <div id="horizontal-form">
+                    <form class="form-horizontal" role="form" action="" method="post">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label no-padding-right">所属用户组</label>
+                            <div class="col-sm-6">
+                                <select name="group_id"  class="col-sm-3">
+                                    <option value="">请选择</option>
+                                    {volist name="groupRes" id="group"}
+                                    <option value="{$group.id}">{$group.title}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">用户名</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="username" placeholder="" name="username" type="text">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="group_id" class="col-sm-2 control-label no-padding-right">昵称</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="nickname" placeholder="" name="nickname" type="text"/>
+                            </div>
+                        </div> 
+                        <div class="form-group">
+                            <label for="group_id" class="col-sm-2 control-label no-padding-right">性别</label>
+                            <div class="col-sm-6">
+                                <label>
+                                    <input name="sex" type="radio" value="0">
+                                    <span class="text">男 </span>
+                                </label>
+                                <label style="margin-left:25px;">
+                                    <input name="sex" type="radio" checked="checked" value="1">
+                                    <span class="text">女 </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="group_id" class="col-sm-2 control-label no-padding-right">Email</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="email" placeholder="" name="email" type="text"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="group_id" class="col-sm-2 control-label no-padding-right">用户密码</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="password" type="password" />
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div> 
+                        <div class="form-group">
+                            <label for="group_id" class="col-sm-2 control-label no-padding-right">确认密码</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="password_confirm" type="password" />
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div> 
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">保存信息</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+	</div>
+
+	    <!--Basic Scripts-->
+    <script src="__ADMIN__/js/jquery_002.js"></script>
+    <script src="__ADMIN__/js/bootstrap.js"></script>
+    <script src="__ADMIN__/js/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/js/beyond.js"></script>
+    
+
+
+</body></html>

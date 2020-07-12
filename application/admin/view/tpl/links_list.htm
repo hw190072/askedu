@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html><head>
+	    <meta charset="utf-8">
+    <title>友情链接列表</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/css/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/css/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/css/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/css/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/css/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/css/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/css/animate.css" rel="stylesheet">
+    
+</head>
+<body>
+	<!-- 头部 -->
+	{include file="tpl/top"}
+	<!-- /头部 -->
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			            <!-- Page Sidebar -->
+            {include file="tpl/left"}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="{:url('/admin')}">系统</a>
+                        </li>
+                        <li class="active">友情链接管理</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+<button type="button" tooltip="添加用户" class="btn btn-sm btn-azure btn-addon" onClick="javascript:window.location.href = '{:url('links/add')}'"> <i class="fa fa-plus"></i> Add
+</button>
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-body">
+                <form action="" method="post" id="listForm" >
+                <div class="flip-scroll">
+                    <table class="table table-bordered table-hover">
+                        <thead class="">
+                            <tr>
+                                <th class="text-center">
+                                    <label>
+                                        <input type="checkbox" id="checkall" class="colored-danger">
+                                        <span class="text"></span>
+                                    </label>
+                                </th>
+                                <th class="text-center">id</th>
+                                <th class="text-center">链接名称</th>
+                                <th class="text-center">链接地址</th>
+                                <th class="text-center" style="width: 45%">链接描述</th>
+                                <th class="text-center">排序</th>
+                                <th class="text-center">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {volist name="list" id="vo"}
+                            <tr id="{$vo['id']}">
+                                <td align="center">
+                                    <label>
+                                        <input name="itmbox[]" type="checkbox" value="{$vo.id}" class="colored-danger">
+                                        <span class="text"></span>
+                                    </label>
+                                </td>
+                                <td align="center">{$vo.id}</td>
+                                <td align="center">{$vo.title}</td>
+                                <td align="center">{$vo.url}</td>
+                                <td align="center">{$vo.notes|mb_substr=0,64,'utf-8'}</td>
+                                <td align="center"><input type="text" style="text-align:center; width: 60px; height:25px;" name="sort[{$vo.id}]" value="{$vo.sort}"></td>
+                                <td align="center">
+                                    <a href="{:url('links/edit',array('id'=>$vo.id))}" class="btn btn-primary btn-sm shiny">
+                                        <i class="fa fa-edit"></i> 编辑
+                                    </a>
+                                    <a href="#" onClick="warning('确实要删除吗！', '{:url('links/del',array('id'=>$vo['id']))}')" class="btn btn-danger btn-sm shiny">
+                                        <i class="fa fa-trash-o"></i> 删除
+                                    </a>
+                                </td>
+                            </tr>
+                            {/volist}
+                            <tr pid="0">
+                                <td colspan="11">
+                                    <a id="checkallc" class="btn btn-default">全选</a>
+                                    <a id="invert" class="btn btn-default">反选</a>
+                                    <a id="reset" class="btn btn-default">清除选择</a>
+                                    <a onclick="listSubmit('batchdel');" class="btn btn-default">批量删除</a>
+                                    <a onclick="listSort('order');" class="btn btn-default">排序</a>
+                                </td>
+                            </tr>
+                        </tbody>                      
+                    </table>
+                </div>
+            </form>
+                <div style="margin-top:10px;">
+                {$list->render()}
+                </div>
+                <div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+	</div>
+
+    <!--Basic Scripts-->
+    <script src="__ADMIN__/js/jquery_002.js"></script>
+    <script src="__ADMIN__/js/bootstrap.js"></script>
+    <script src="__ADMIN__/js/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/js/beyond.js"></script>
+    <script>
+        /**
+         *设置单击响应函数
+         * @param  {[String]} objStr [ 要设置单击响应事件的元素的id ]
+         * @param  {[function]} fun  [ 单击后响应的行为 ]
+         * @return {[none]}       
+         */
+        function myClick(objStr, fun) {
+            var obj = document.getElementById(objStr);
+            obj.onclick = fun;
+        }
+        // 获取全选/全不选选项
+        var hobbies = document.getElementsByClassName("colored-danger");
+        var checkOrCancelAll = document.getElementById("checkall");
+
+        // 全选/全不选
+        myClick("checkall", function() {
+                if(this.checked){
+                for (var i = 0; i < hobbies.length; i++) {
+                    hobbies[i].checked = true;
+                }
+                }else{
+                for (var i = 0; i < hobbies.length; i++) {
+                    hobbies[i].checked = false;
+                }
+                }
+        });
+        // 全选
+        myClick("checkallc", function() {
+            for (var i = 0; i < hobbies.length; i++) {
+                hobbies[i].checked = true;
+            }
+            checkOrCancelAll.checked = true;
+        });
+
+        // 复位
+        myClick("reset", function() {
+            for (var i = 0; i < hobbies.length; i++) {
+                hobbies[i].checked = false;
+            }
+            checkOrCancelAll.checked = false;
+        });
+        // 反选
+        myClick("invert", function() {
+            checkOrCancelAll.checked = true;
+            for (var i = 0; i < hobbies.length; i++) {
+                
+                if (hobbies[i].checked) {
+                    hobbies[i].checked = false;
+                    checkOrCancelAll.checked = false;
+                } else {
+                    hobbies[i].checked = true;
+                }
+            }
+        });
+        function listSubmit(a)
+        {
+            var listForm = $('#listForm');
+            var action = listForm.attr('action');
+            if($("input[name='itmbox[]']:checked").length == 0){
+                alert('没有选中的信息!');
+                return false;
+            }else{
+                //批量删除
+                if (a == 'batchdel')
+                {
+                    listForm.attr('action',action+''+a);
+                    if (confirm("删除是不可恢复的，你确认要删除吗？"))
+                    {
+                        listForm.submit();
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+        function listSort(a){
+            var listSort = $('#listForm');
+            var action = listSort.attr('action');
+            listSort.attr('action',action+''+a);
+            listSort.submit();
+        }
+    </script>
+    
+
+
+</body></html>

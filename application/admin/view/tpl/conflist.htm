@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html><head>
+	    <meta charset="utf-8">
+    <title>配置列表</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/css/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/css/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/css/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/css/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/css/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/css/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/css/animate.css" rel="stylesheet">
+    
+</head>
+<body>
+	<!-- 头部 -->
+	{include file="tpl/top"}
+	<!-- /头部 -->
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			<!-- Page Sidebar -->
+            {include file="tpl/left" /} 
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="{:url('/admin')}">系统</a>
+                        </li>
+                        <li class="active">配置管理</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                   <div class="widget-body">
+                        <div class="docs-example">
+                            <ul class="nav nav-tabs tabs-flat">
+                                <li class="active"><a href="#info-tab" data-toggle="tab">网站设置</a></li>
+                                <li class=""><a href="#accessory-tab" data-toggle="tab">附件设置</a></li>
+                                <li class=""><a href="#other-tab" data-toggle="tab">其他设置</a></li>
+                            </ul>
+
+                            <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+
+                                <div class="tab-content tabs-flat">
+                                    <div class="tab-pane active" id="info-tab">
+                                        <?php foreach($confs as $k=>$v): ?>
+                                        <?php if($v['cf_type']==1 ): ?>
+                                        <div class="form-group has-feedback">
+                                            <label class="col-lg-2 control-label"><?php echo $v['cnname'] ?></label>
+                                            <?php if($v['dt_type']==1): ?>
+                                            <!-- 单行文本框 -->
+                                            <div class="col-lg-5">
+                                                <input type="text" class="form-control" name="<?php echo $v['enname'] ?>" data-bv-field="fullName" value="<?php echo $v['value'] ?>">
+                                            </div>
+                                            <?php endif; ?>
+                                            <?php if($v['dt_type']==2): $valuesArr=explode(',',$v['values']); foreach($valuesArr as $k1 => $v1): ?>
+                                            <!-- 单选按钮 -->
+                                            <div class="radio" style="float:left; padding-left:15px;">
+                                                <label>
+                                                <input {if condition="$v1 eq $v['value']"} checked="checked" {/if} name="<?php echo $v['enname'];?>" value="<?php echo $v1;?>" type="radio">
+                                                <span class="text"><?php echo $v1;?></span>
+                                                </label>
+                                            </div>
+                                            <?php endforeach; endif; ?>
+                                            <?php if($v['dt_type']==3): ?>
+                                            <!-- 复选框-->
+                                            <?php $valuesArr = explode(',',$v['values']);
+                                                $valueArr = explode(',',$v['value']);
+                                                foreach($valuesArr as $k1 => $v1): ?>
+                                            <label>
+                                                <input name="<?php echo $v['enname']?>[]" <?php if(in_array($v1,$valueArr)) {echo 'checked="checked"';} ?>   value="<?php echo $v1;?>" type="checkbox">
+                                                <span class="text"><?php echo $v1;?></span>
+                                            </label>
+                                            <?php endforeach; ?>
+                                            <?php endif; ?>
+                                            <?php if($v['dt_type']==4): ?>
+                                            <!-- 下拉菜单 -->
+                                            <label style="padding-left:15px;">
+                                            <select name="<?php echo $v['enname'] ?>">
+                                                <?php $valuesArr = explode(',',$v['values']); foreach($valuesArr as $k1=>$v1): ?>
+                                                <option <?php if($v1 == $v['value']){echo 'selected="selected"' ;}?> value="<?php echo $v1 ?>"><?php echo $v1 ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            </label>
+                                            <?php endif; ?>
+                                            <?php if($v['dt_type']==5): ?>
+                                            <!-- 文本域 -->
+                                            <div class="col-lg-5">
+                                                <textarea rows="5" name="<?php echo $v['enname'] ?>" class="form-control"><?php echo $v['value'] ?></textarea>
+                                            </div>
+                                            <?php endif; ?>
+                                            <?php if($v['dt_type']==6): ?>
+                                            <!-- 附件 -->
+                                            <input placeholder="" style="float:left;" value=""  name="<?php echo $v['enname'];?>"  type="file">
+                                            {if condition="$v['value'] neq ''"}<img height="30" src="__UPLOADS__/image/{$v.value}" />{else /}{/if}
+                                            <?php endif; ?>
+                                        </div>
+                                        <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </div>
+                                    <div class="tab-pane" id="accessory-tab">
+                                        <?php foreach($confs as $k=>$v): ?>
+                                        <?php if($v['cf_type']==2 ): ?>
+                                        <div class="form-group has-feedback">
+                                            <label class="col-lg-2 control-label"><?php echo $v['cnname'] ?></label>
+                                            <?php if($v['dt_type']==1): ?>
+                                            <!-- 单行文本框 -->
+                                            <div class="col-lg-5">
+                                                <input type="text" class="form-control" name="<?php echo $v['enname'] ?>" data-bv-field="fullName" value="<?php echo $v['value'] ?>">
+                                            </div>
+                                            <?php endif; ?>
+                                            <?php if($v['dt_type']==2): $valuesArr=explode(',',$v['values']); foreach($valuesArr as $k1 => $v1): ?>
+                                            <!-- 单选按钮 -->
+                                            <div class="radio" style="float:left; padding-left:15px;">
+                                            <label>
+                                                <input {if condition="$v1 eq $v['value']"} checked="checked" {/if} name="<?php echo $v['enname'];?>" value="<?php echo $v1;?>" type="radio">
+                                                <span class="text"><?php echo $v1;?></span>
+                                            </label>
+                                            </div>
+                                            <?php endforeach; endif; ?>
+                                            <?php if($v['dt_type']==3): ?>
+                                            <!-- 复选框 -->
+                                            <?php $valuesArr = explode(',',$v['values']);
+                                                $valueArr = explode(',',$v['value']);
+                                                foreach($valuesArr as $k1 => $v1): ?>
+                                            <label>
+                                                <input name="<?php echo $v['enname']?>[]" type="checkbox" {if condition="$v1 eq $v['value']"}checked="checked"{/if} >
+                                                <span class="text"><?php echo $v1;?></span>
+                                            </label>
+                                            <?php endforeach; ?>
+                                            <?php endif; ?>
+                                            <?php if($v['dt_type']==4): ?>
+                                            <!-- 下拉菜单 -->
+                                            <select name="<?php echo $v['enname'] ?>">
+                                                <?php $valuesArr = explode(',',$v['values']); foreach($valuesArr as $k1=>$v1): ?>
+                                                <option <?php if($v1 == $v['value']){echo 'selected="selected"' ;}?> value="<?php echo $v1 ?>"><?php echo $v1 ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <?php endif; ?>
+                                            <?php if($v['dt_type']==5): ?>
+                                            <!-- 文本域 -->
+                                            <div class="col-lg-5">
+                                                <textarea rows="5" name="<?php echo $v['enname'] ?>" class="form-control"><?php echo $v['value'] ?></textarea>
+                                            </div>
+                                            <?php endif; ?>
+                                            <?php if($v['dt_type']==6): ?>
+                                            <!-- 附件 -->
+                                            <input placeholder="" style="float:left;padding-left:15px;" value=""  name="<?php echo $v['enname'];?>"  type="file">
+                                            {if condition="$v['value'] neq ''"}<img height="30" src="__UPLOADS__/image/{$v.value}" />{else /}未长传{/if}
+                                            <?php endif; ?>
+                                        </div>
+                                        <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </div>
+                                    <div class="tab-pane" id="other-tab">
+                                        <?php foreach($confs as $k=>$v): ?>
+                                        <?php if($v['cf_type']==3 ): ?>
+                                        <div class="form-group has-feedback">
+                                            <label class="col-lg-2 control-label"><?php echo $v['cnname'] ?></label>
+                                            <?php if($v['dt_type']==1): ?>
+                                            <!-- 单行文本框 -->
+                                            <div class="col-lg-5">
+                                                <input type="text" class="form-control" name="<?php echo $v['enname'] ?>" data-bv-field="fullName" value="<?php echo $v['value'] ?>">
+                                            </div>
+                                            <?php endif; ?>
+                                            <?php if($v['dt_type']==2): $valuesArr=explode(',',$v['values']); foreach($valuesArr as $k1 => $v1): ?>
+                                            <!-- 单选按钮 -->
+                                            <div class="radio" style="float:left; padding-left:15px;">
+                                            <label>
+                                                <input {if condition="$v1 eq $v['value']"} checked="checked" {/if} name="<?php echo $v['enname'];?>" value="<?php echo $v1;?>" type="radio">
+                                                <span class="text"><?php echo $v1;?></span>
+                                            </label>
+                                            </div>
+                                            <?php endforeach; endif; ?>
+                                            <?php if($v['dt_type']==3): ?>
+                                            <!-- 复选框 -->
+                                            <?php $valuesArr = explode(',',$v['values']);
+                                                $valueArr = explode(',',$v['value']);
+                                                foreach($valuesArr as $k1 => $v1): ?>
+                                            <label style="padding-left:15px;">
+                                                <input name="<?php echo $v['enname']?>[]" type="checkbox" <?php if(in_array($v1,$valueArr)){echo 'checked="checked"';} ?>  value="<?php echo $v1 ?>">
+                                                <span class="text"><?php echo $v1;?></span>
+                                            </label>
+                                            <?php endforeach; ?>
+                                            <?php endif; ?>
+                                            <?php if($v['dt_type']==4): ?>
+                                            <!-- 下拉菜单 -->
+                                            <select name="<?php echo $v['enname'] ?>">
+                                                <?php $valuesArr = explode(',',$v['values']); foreach($valuesArr as $k1=>$v1): ?>
+                                                <option <?php if($v1 == $v['value']){echo 'selected="selected"' ;}?> value="<?php echo $v1 ?>"><?php echo $v1 ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <?php endif; ?>
+                                            <?php if($v['dt_type']==5): ?>
+                                            <!-- 文本域 -->
+                                            <div class="col-lg-5">
+                                                <textarea rows="5" name="<?php echo $v['enname'] ?>" class="form-control"><?php echo $v['value'] ?></textarea>
+                                            </div>
+                                            <?php endif; ?>
+                                            <?php if($v['dt_type']==6): ?>
+                                            <!-- 附件 -->
+                                            <input placeholder="" style="float:left;padding-left:15px;" value=""  name="<?php echo $v['enname'];?>"  type="file">
+                                            {if condition="$v['value'] neq ''"}<img height="30" src="__UPLOADS__/conf/{$v.value}" />{else /}未长传{/if}
+                                            <?php endif; ?>
+                                        </div>
+                                        <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-default">保存信息</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>   
+                </div>
+            </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+	</div>
+
+    <!--Basic Scripts-->
+    <script src="__ADMIN__/js/jquery_002.js"></script>
+    <script src="__ADMIN__/js/bootstrap.js"></script>
+    <script src="__ADMIN__/js/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/js/beyond.js"></script>
+    
+
+
+</body></html>

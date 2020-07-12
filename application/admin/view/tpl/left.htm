@@ -1,0 +1,146 @@
+<!-- Page Sidebar -->
+<div class="page-sidebar" id="sidebar">
+    <!-- Sidebar Menu -->
+    <ul class="nav sidebar-menu">
+        <!--Dashboard-->
+        <li>
+            <a href="{:url('index')}" class="menu-dropdown">
+                <i class="menu-icon typcn typcn-home"></i>
+                <span class="menu-text">首页</span>
+                <i class="menu-expand"></i>
+            </a>
+        </li>
+        <li {if condition="$cont eq 'Alldata'" }class="open" {/if}>
+            <a href="{:url('Alldata/index')}" class="menu-dropdown">
+                <i class="menu-icon fa fa-folder-o"></i>
+                <span class="menu-text">文件管理</span>
+                <i class="menu-expand"></i>
+            </a>
+        </li>
+        <li {if condition="$cont eq 'Alldata'" }class="open" {/if}>
+            <a href="{:url('Alldata/index')}" class="menu-dropdown">
+                <i class="menu-icon fa fa-bar-chart-o"></i>
+                <span class="menu-text">全部数据</span>
+                <i class="menu-expand"></i>
+            </a>
+        </li>
+        <li {if condition="$cont eq 'Cate'" }class="open" {/if}>
+            <a href="{:url('Cate/lst')}" class="menu-dropdown">
+                <i class="menu-icon fa fa-check"></i>
+                <span class="menu-text">领取数据</span>
+                <i class="menu-expand"></i>
+            </a>
+        </li>
+        <li {if condition="$cont eq 'Admin'" } class="open" {/if}>
+            <a href="{:url('Admin/lst')}" class="menu-dropdown">
+                <i class="menu-icon fa fa-tags"></i>
+                <span class="menu-text">核准制</span>
+                <i class="menu-expand"></i>
+            </a>
+        </li>
+        <li {if condition="$cont eq 'Admin'" } class="open" {/if}>
+            <a href="{:url('Admin/lst')}" class="menu-dropdown">
+                <i class="menu-icon fa fa-book"></i>
+                <span class="menu-text">积分制</span>
+                <i class="menu-expand"></i>
+            </a>
+        </li>
+        <li {if condition="$cont eq 'Admin'" } class="open" {/if}>
+            <a href="{:url('Admin/lst')}" class="menu-dropdown">
+                <i class="menu-icon fa fa-briefcase"></i>
+                <span class="menu-text">留学生</span>
+                <i class="menu-expand"></i>
+            </a>
+        </li>
+        <li {if condition="$cont eq 'Admin'" } class="open" {/if}>
+            <a href="{:url('Admin/lst')}" class="menu-dropdown">
+                <i class="menu-icon fa fa-user-md"></i>
+                <span class="menu-text">应届生</span>
+                <i class="menu-expand"></i>
+            </a>
+        </li>
+        <li {if condition="$cont eq 'Admin'" } class="open" {/if}>
+            <a href="{:url('Admin/lst')}" class="menu-dropdown">
+                <i class="menu-icon fa fa-file-text"></i>
+                <span class="menu-text">预约现场名单</span>
+                <i class="menu-expand"></i>
+            </a>
+        </li>
+        <li {if condition="$cont eq 'Admin'" } class="open" {/if}>
+            <a href="{:url('Admin/lst')}" class="menu-dropdown">
+                <i class="menu-icon fa fa-check-square-o"></i>
+                <span class="menu-text">学员录入</span>
+                <i class="menu-expand"></i>
+            </a>
+        </li>
+        <li {if condition="$cont eq 'Admin'" } class="open" {/if}>
+            <a href="{:url('Admin/lst')}" class="menu-dropdown">
+                <i class="menu-icon fa fa-envelope-o"></i>
+                <span class="menu-text">短信服务</span>
+                <i class="menu-expand"></i>
+            </a>
+        </li>
+        <li {if condition="$cont eq 'Admin'" } class="open" {/if}>
+            <a href="{:url('Admin/lst')}" class="menu-dropdown">
+                <i class="menu-icon fa  fa-users"></i>
+                <span class="menu-text">管理员</span>
+                <i class="menu-expand"></i>
+            </a>
+            <ul class="submenu">
+                <li>
+                    <a href="{:url('Admin/lst')}">
+                        <i class="menu-expand"></i>
+                        <span class="menu-text">
+                            用户列表
+                        </span>
+
+                    </a>
+                </li>
+                <li>
+                    <a href="{:url('AuthRule/lst')}">
+                        <span class="menu-text">
+                            权限规则 </span>
+                        <i class="menu-expand"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:url('AuthGroup/lst')}">
+                        <span class="menu-text">
+                            配置权限 </span>
+                        <i class="menu-expand"></i>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li {if condition="$cont eq 'Conf'" } class="open" {/if}>
+            <a href="{:url('conf/conflist')}" class="menu-dropdown">
+                <i class="menu-icon fa fa-gear"></i>
+                <span class="menu-text">系统管理</span>
+                <i class="menu-expand"></i>
+            </a>
+            <ul class="submenu">
+                <li>
+                    <a href="{:url('conf/conflist')}">
+                        <span class="menu-text">
+                            网站配置
+                        </span>
+                        <i class="menu-expand"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:url('conf/lst')}">
+                        <span class="menu-text">
+                            配置列表
+                        </span>
+                        <i class="menu-expand"></i>
+                    </a>
+
+                </li>
+            </ul>
+
+        </li>
+
+    </ul>
+    <!-- /Sidebar Menu -->
+</div>
+<!-- /Page Sidebar -->
