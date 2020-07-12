@@ -1,8 +1,6 @@
 <?php
-
 namespace app\admin\controller;
 
-use app\admin\model\Alldata as AlldataModel;
 use vendor\phpoffice\phpexcel\Classes\PHPExcel;
 use think\facade\Env;
 
@@ -10,7 +8,6 @@ class Alldata extends Common
 {
     public function index()
     {
-        $alldata = new AlldataModel();
         $list = db('alldata')->paginate(10);
         if (Request()->isPost()) {
             $data = input('post.');
@@ -24,7 +21,7 @@ class Alldata extends Common
             }
             if (!isset($data['progress'])) {
                 $data['progress'] = '';
-            }
+             }
             if (!isset($data['declare'])) {
                 $data['declare'] = '';
             }
@@ -102,12 +99,13 @@ class Alldata extends Common
             $objPHPExcel =new \PHPExcel();
             //获取表单上传文件
             $file = request()->file('file');
-            $info = $file->validate(['ext' => 'xlsx,xls'])->move(Env::get('root_path')."public".DIRECTORY_SEPARATOR."uploads".DIRECTORY_SEPARATOR."excel");  //上传验证后缀名,以及上传之后移动的地址  E:\wamp\www\bick\public
-            dump($info);die;
+             //上传验证后缀名,以及上传之后移动的地址 
+            $info = $file->validate(['ext' => 'xlsx,xls'])->move(Env::get('root_path')."public".DIRECTORY_SEPARATOR."uploads".DIRECTORY_SEPARATOR."excel"); 
             if($info)
             {
-                $exclePath = $info->getSaveName();  //获取文件名
-                $file_name = Env::get('root_path') . 'public' . __DIR__ . $exclePath;//上传文件的地址
+                //获取文件名
+                $exclePath = $info->getSaveName();
+                $file_name = Env::get('root_path') . 'public' . DIRECTORY_SEPARATOR ."uploads". DIRECTORY_SEPARATOR."excel" . DIRECTORY_SEPARATOR . $exclePath;//上传文件的地址
                 $file_types = explode ( ".", $_FILES ['file'] ['name'] );
                 $file_type = $file_types [count ( $file_types ) - 1];
                 if($file_type=='xls'){
@@ -121,28 +119,41 @@ class Alldata extends Common
                 $data = [];
                 $i=0;
                 foreach($excel_array as $k=>$v) {
-                    $data[$k]['viewName'] = $v[0];
-                    $data[$k]['cityId'] = $v[1];
-                    $data[$k]['stationAddress'] = $v[2];
-                    $data[$k]['linkMan'] = $v[3];
-                    $data[$k]['linkPhone'] = $v[4];
-                    $data[$k]['longitude'] = $v[5];
-                    $data[$k]['latitude'] = $v[6];
-                    $data[$k]['userId'] = $v[7];
-                    $data[$k]['remark'] = $v[8];
+                    if(empty(array_filter($v))){
+                        continue;
+                    }
+                    (string) $v[7];
+                    $data[$k]['name'] = $v[0];
+                    $data[$k]['idcard'] = $v[1];
+                    $data[$k]['phone'] = $v[2] ;
+                    $data[$k]['social_acct'] = $v[3];
+                    $data[$k]['social_pwd'] = $v[4];
+                    $data[$k]['chsi_acct'] = $v[5];
+                    $data[$k]['chsi_pwd'] = $v[6];
+                    $data[$k]['entrance'] = $v[7];
+                    $data[$k]['declare'] = $v[8];
+                    $data[$k]['audit'] = $v[9];
+                    $data[$k]['progress'] = $v[10];
+                    $data[$k]['belong'] = $v[11];
+                    $data[$k]['remark'] = $v[12];
+                    $data[$k]['update_time'] = time();
+                    $data[$k]['create_time'] = time();
+                    if($v[7] == ''){
+                        $data[$k]['entrance'] = "待定";
+                    }
                     $i++;
                 }
-                $re=    Db::name("htt_freightstation")->insertAll($data);
+                $res = Db("alldata")->insertAll($data);
                 if($res){
                     $msg=[
                         'code'=>1,
-                        'msg'=>'已获取信息',
+                        'msg'=>'上传信息成功',
                     ];
                     return json_encode($msg);
                 }else{
                     $msg=[
                         'code'=>0,
-                        'msg'=>'获取信息失败',
+                        'msg'=>'上传信息失败',
                     ];
                     return json_encode($msg);
                 }

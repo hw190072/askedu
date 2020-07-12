@@ -1,4 +1,4 @@
-<?php /*a:3:{s:61:"D:\phpstudy\WWW\askedu\application\admin\view\tpl\alldata.htm";i:1594460784;s:57:"D:\phpstudy\WWW\askedu\application\admin\view\tpl\top.htm";i:1593337599;s:58:"D:\phpstudy\WWW\askedu\application\admin\view\tpl\left.htm";i:1593424734;}*/ ?>
+<?php /*a:3:{s:61:"D:\phpstudy\WWW\askedu\application\admin\view\tpl\alldata.htm";i:1594549613;s:57:"D:\phpstudy\WWW\askedu\application\admin\view\tpl\top.htm";i:1593337599;s:58:"D:\phpstudy\WWW\askedu\application\admin\view\tpl\left.htm";i:1593424734;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -354,6 +354,10 @@
                                                             class="fa fa-plus"></i> 添加</a>
                                                     <a href="javascript:;" class="btn btn-warning"
                                                         title="导出"><i class="fa fa-pencil"></i> 导出</a>
+                                                    <!-- <form action="<?php echo url('alldata/uploadExcel'); ?>" enctype="multipart/form-data" method="post">
+                                                    <input name="file" title="导入Excel" type="file">
+                                                        <button  type="submit">提交</button>
+                                                    </form> -->
                                                     <a href="javascript:;" class="btn btn-blue" id="uploadExcel"
                                                         title="导入Excel"><i class="fa fa-pencil"></i> 上传Excel</a>
                                                     <a onclick="listSubmit('batchdel');" class="btn btn-danger btn-del btn-disabled"
@@ -558,15 +562,21 @@
                     ,exts: 'xls|excel|xlsx' //只允许上传压缩文件
                     ,done: function(res){
                         if(res.code===1){
-                            layer.msg(res.msg,{icon:6});
+                            layer.open({
+                                title:"信息"
+                                ,icon:6
+                                ,content:res.msg
+                                ,time: 5000
+                                ,yes: function(index, layero){
+                                    self.location="<?php echo url('alldata/index'); ?>";//跳到指定页面
+                                },cancel: function(index,layero){ //按右上角“X”按钮
+                                    self.location="<?php echo url('alldata/index'); ?>";//跳到指定页面
+                                },
+                            });
                         }else{
                             layer.msg('解析失败',{icon:5});
                         }
                     }
-                });
-                form.on('submit(formsub)',function(data){
-                    layer.msg('导入数据具体详情未协商确认,待确认后处理');
-                    return false;
                 });
             });
 

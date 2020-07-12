@@ -60,7 +60,7 @@
                                 <div class="widget-body">
                                     <div class="fixed-table-toolbar">
                                         <div class="bs-bars pull-left form-group col-lg-8">
-                                            <!-- <form action="" method="POST" id="searchForm"> -->
+                                            <form action="" method="POST" id="searchForm">
                                             <div id="toolbar" class="toolbar form-group col-lg-12">
                                                 <div class="pull-left search"><input class="form-control" type="text" name="name"
                                                         placeholder="搜索关键词"></div>
@@ -72,12 +72,12 @@
                                                             class="fa fa-plus"></i> 添加</a>
                                                     <a href="javascript:;" class="btn btn-warning"
                                                         title="导出"><i class="fa fa-pencil"></i> 导出</a>
-                                                    <form action="{:url('alldata/uploadExcel')}" enctype="multipart/form-data" method="post">
+                                                    <!-- <form action="{:url('alldata/uploadExcel')}" enctype="multipart/form-data" method="post">
                                                     <input name="file" title="导入Excel" type="file">
                                                         <button  type="submit">提交</button>
-                                                    </form>
-                                                    <!-- <a href="javascript:;" class="btn btn-blue" id="uploadExcel"
-                                                        title="导入Excel"><i class="fa fa-pencil"></i> 上传Excel</a> -->
+                                                    </form> -->
+                                                    <a href="javascript:;" class="btn btn-blue" id="uploadExcel"
+                                                        title="导入Excel"><i class="fa fa-pencil"></i> 上传Excel</a>
                                                     <a onclick="listSubmit('batchdel');" class="btn btn-danger btn-del btn-disabled"
                                                         title="删除"><i class="fa fa-trash"></i> 删除</a> 
                                                 </div> 
@@ -289,15 +289,21 @@
                     ,exts: 'xls|excel|xlsx' //只允许上传压缩文件
                     ,done: function(res){
                         if(res.code===1){
-                            layer.msg(res.msg,{icon:6});
+                            layer.open({
+                                title:"信息"
+                                ,icon:6
+                                ,content:res.msg
+                                ,time: 5000
+                                ,yes: function(index, layero){
+                                    self.location="{:url('alldata/index')}";//跳到指定页面
+                                },cancel: function(index,layero){ //按右上角“X”按钮
+                                    self.location="{:url('alldata/index')}";//跳到指定页面
+                                },
+                            });
                         }else{
                             layer.msg('解析失败',{icon:5});
                         }
                     }
-                });
-                form.on('submit(formsub)',function(data){
-                    layer.msg('导入数据具体详情未协商确认,待确认后处理');
-                    return false;
                 });
             });
 
