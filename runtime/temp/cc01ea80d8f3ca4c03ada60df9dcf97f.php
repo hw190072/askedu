@@ -1,4 +1,4 @@
-<?php /*a:3:{s:61:"D:\phpstudy\WWW\askedu\application\admin\view\tpl\alldata.htm";i:1594621364;s:57:"D:\phpstudy\WWW\askedu\application\admin\view\tpl\top.htm";i:1593337599;s:58:"D:\phpstudy\WWW\askedu\application\admin\view\tpl\left.htm";i:1594634138;}*/ ?>
+<?php /*a:3:{s:61:"D:\phpstudy\WWW\askedu\application\admin\view\tpl\newdata.htm";i:1594621364;s:57:"D:\phpstudy\WWW\askedu\application\admin\view\tpl\top.htm";i:1593337599;s:58:"D:\phpstudy\WWW\askedu\application\admin\view\tpl\left.htm";i:1594634138;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>

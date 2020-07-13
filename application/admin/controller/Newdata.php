@@ -4,11 +4,12 @@ namespace app\admin\controller;
 use vendor\phpoffice\phpexcel\Classes\PHPExcel;
 use think\facade\Env;
 
-class Alldata extends Common
+class Newdata extends Common
 {
     public function index()
     {
-        $list = db('alldata')->paginate(15);
+        // $belong = array('exp','is null');
+        $list = db('alldata')->where('belong','is null')->paginate(15);
         if (Request()->isPost()) {
             $data = input('post.');
             $table = 'alldata';
@@ -51,7 +52,7 @@ class Alldata extends Common
         $this->assign([
             'list' => $list,
         ]);
-        return view('tpl/alldata');
+        return view('tpl/newdata');
     }
     //添加客户
     public function add()
